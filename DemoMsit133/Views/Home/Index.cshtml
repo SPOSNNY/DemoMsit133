@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <input type="button" value="click" id="btn1" />
+    <div id="text1"></div>
+   
+</div>
+
+@section CSS{ }
+
+
+@section script{
+    <script>
+     
+      
+        $('#btn1').click(() => {
+
+            $('#text1').html("&#xF417;<h2>Hello !!!</h2>");
+        });
+
+
+    </script>
+
+}
+
