@@ -23,6 +23,16 @@ namespace DemoMsit133.Controllers
             return View();
         }
 
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        public IActionResult FirstAjax()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();

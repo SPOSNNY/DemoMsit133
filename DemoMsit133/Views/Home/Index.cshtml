@@ -3,9 +3,26 @@
 }
 
 <div class="text-center">
+    
+   
+
+    
     <input type="button" value="click" id="btn1" />
     <div id="text1"></div>
-   
+    <table class="table table-bordered tab">
+        @*<thead>
+                <tr>
+                    <td>name</td>
+                    <td>workYears</td>
+                    <td>salary</td>
+                <tr>
+            </thead>
+            <tbody >
+                <tr >
+
+                <tr>
+            </tbody>*@
+    </table>
 </div>
 
 @section CSS{ }
@@ -17,7 +34,68 @@
       
         $('#btn1').click(() => {
 
-            $('#text1').html("&#xF417;<h2>Hello !!!</h2>");
+            /*  $('#text1').html("&#xF417;<h2>Hello !!!</h2>");*/
+
+            //var emps = [{ "name": "Tom", "workYears": 3, "salary": 35000 },
+            //{ "name": "Jack", "workYears": 5, "salary": 40000 },
+            //    { "name": "Mary", "workYears": 7, "salary": 45000 }];
+            //console.log(emps[2]);
+            //console.log(emps[2].name);
+            //console.log(emps[2].salary);
+
+            //for (i = 0; i < emps.length; i++) {
+            //    console.log(emps[2]);
+            //    console.log(emps[2].name);
+            //    console.log(emps[2].salary);
+            //    console.log(emps[2].workYears);
+            //}
+
+
+
+            var emp = {
+                "employees": [
+                    { "name": "Tom", "workYears": 3, "salary": 35000 },
+                    { "name": "Jack", "workYears": 5, "salary": 40000 },
+                    { "name": "Mary", "workYears": 7, "salary": 45000 }
+                ]
+            };
+
+            //for (i = 0; i < emp.length; i++) {
+            //    console.log(emp[2]);
+            //    console.log(emp[2].name);
+            //    console.log(emp[2].salary);
+            //    console.log(emp[2].workYears);
+
+
+            //}
+            let table = "";
+            let tbd = "";
+            table += `<thead><tr><td>name</td><td>workYears</td><td>salary</td><tr></thead><tbody class="tbd"></tbody>`;
+          
+            emp.employees.forEach((i) => {
+                
+                console.log(i);
+                const {name,workYears,salary }=i
+                console.log(name);
+                console.log(workYears);
+                console.log(salary);
+               
+                tbd += `<tr><td>${name}</td><td>${workYears}</td><td>${salary}</td></tr>`;
+               
+            });
+            $('.tab').append(table);
+            $('.tbd').append(tbd);
+           
+            //$('emp').each(function (index, value) {
+
+            //    console.log(index);
+            //    console.log(emp[index].name);
+            //    console.log(emp[index].salary);
+            //    console.log(emp[index].workYears);
+
+
+            //})
+
         });
 
 
