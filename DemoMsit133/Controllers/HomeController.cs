@@ -43,5 +43,20 @@ namespace DemoMsit133.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public IActionResult AjaxPost()
+        {
+
+
+            return View();
+        }
+        [HttpPost]
+        public IActionResult AjaxPost(CUser user)
+        {
+            ViewBag.name = user.username;
+            ViewBag.age = user.age;
+            ViewBag.email = user.email;
+            return View();
+        }
     }
 }

@@ -17,16 +17,18 @@ namespace DemoMsit133.Controllers
         }
 
 
-        public IActionResult Index(string userName, int age)
+        public IActionResult Index(CUser user)
         {
             System.Threading.Thread.Sleep(4000);
-            if (string.IsNullOrEmpty(userName))
+            if (string.IsNullOrEmpty(user.username))
             {
-                userName = "中文";
+                user.username = "中文";
 
             }
-            return Content($"Hello {userName} {age} ", "text/plain", System.Text.Encoding.UTF8);
+            return Content($"Hello {user.username } {user.age} ", "text/plain", System.Text.Encoding.UTF8);
         }
+
+       
 
 
         public IActionResult RegistrationCheck(string userName, string password)

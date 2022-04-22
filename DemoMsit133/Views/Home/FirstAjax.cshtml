@@ -56,9 +56,16 @@
                 console.log('abort')
                 divMessage.innerHTML = "您取消了這次的執行";
             })
+            //第一種
+            //const url = "@Url.Action("Index","api")";
 
+            //第二種 
+            const url = "@Url.Content("~/api/Index")";
+
+            const parms = `?userName=${txtName.value}&age=${txtAge.value}`;
             //步驟二對伺服器發出要求(Request)
-            xhr.open("GET", `/api/Index?userName=${txtName.value}&age=${txtAge.value}`); //打開瀏覽器輸入網址
+           
+            xhr.open("GET", `${url}${parms}`); //打開瀏覽器輸入網址
             xhr.timeout = 5000; //超過時間伺服器沒有回應，停止程式的執行
             xhr.send(); //Enter鍵
 
