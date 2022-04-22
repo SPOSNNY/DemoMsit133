@@ -27,11 +27,13 @@
             <button type="reset" class="btn btn-primary">清除</button>
         </form>
         <div class="alert alert-success">
-            <div>@ViewBag.name</div>
+            @*<div>@ViewBag.name</div>
 
             <div>@ViewBag.email</div>
 
-            <div>@ViewBag.age</div>
+            <div>@ViewBag.age</div>*@
+            <div id="div1" ></div>
+
         </div>
     </div>
 </div>
@@ -41,15 +43,28 @@
 
 @section script{ 
     <script>
-
-
+        const div = document.querySelector('#div1');
+        const InputName = document.querySelector('#InputName');
+        const InputEmail = document.querySelector('#InputEmail');
+        const InputAge = document.querySelector('#InputAge');
         const btn = document.querySelector('button[type="submit"]');
         btn.addEventListener('click', (xzy) => {
             xzy.preventDefault(); //取消預設行為
             console.log("button click");
 
+            const xhr = new XMLHttpRequest();
 
+            xhr.addEventListener('load', () => {
+                const data = xhr.responseText;
+                div.textContent = data;
+            });
 
+            const params = `userName=${InputName.value}&email=${InputEmail.value}&age=${InputAge.value}`;
+           
+            xhr.open("post", "@Url.Content("~/api/register")");
+            xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+            xhr.send(params);
+            //post  放send(key=value&&key=value)
         })
 
 

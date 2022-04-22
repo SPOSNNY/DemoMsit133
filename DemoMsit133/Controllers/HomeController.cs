@@ -58,5 +58,19 @@ namespace DemoMsit133.Controllers
             ViewBag.email = user.email;
             return View();
         }
+
+        public IActionResult AjaxFormData(CUser user)
+        {
+
+            return View();
+
+        }
+
+        public IActionResult Address()
+        {
+
+            return View();
+
+        }
     }
 }
