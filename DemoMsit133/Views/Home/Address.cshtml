@@ -1,47 +1,151 @@
-﻿
-@{
-    ViewData["Title"] = "Address";
+﻿@{
+	ViewData["Title"] = "Address";
 }
 
 <h1>Address</h1>
-<select id="select1">
-
+<select id="city">
 </select>
 
-<select id="select2">
+<select id="Districts">
 </select>
 
-<select id="select3">
+<select id="Roads">
 </select>
 @section script{
-    <script>
-        const xhr = new XMLHttpRequest();
-        const selCity = document.querySelector('#select1');
+<script>
+	const xhr = new XMLHttpRequest();
 
-        selCity.addEventListener('change', () => {
-            console.log(selCity.options[selCity.selectedIndex].value);
+	Init();
+
+	//點擊城市下拉式選單顯示鄉鎮下拉式選單內容
+	$("#city").on('change',function()
+	{
+		$('#Districts').empty();
+		let selCity = $("#city").val();
+		const url = "@Url.Content("~/api/Districts")";
+		const parms = `?city=${selCity}`;
+
+		//步驟二對伺服器發出要求(Request)
+		GetMethod(url+parms,null,function (response) {
+
+			 $.each(response, function (i, item) {
+				 console.log(item);
+
+		     $('#Districts').append($('<option>', {
+		        value: item.siteId,
+		        text : item.siteId
+			    }));
+			})
+
+			},function (thrownError) {
+		  console.log(thrownError);
+		});
+	});
+
+	//#Region "JQuery方法"
+	  //------------------------------
+	  //$.ajax({
+		//	type: "GET",
+		//	url: "@Url.Content("~/api/City")",
+		//	dataType: "json",
+		//	success: function (response) {
+		//	 console.log(response);
+
+		//		response.forEach((item) => {
+		//			const opt = new Option(item.city, item.city);
+		//			selCity.options.add(opt);
+		//		})
+
+		//	},
+		//	error: function (thrownError) {
+		//	  console.log(thrownError);
+		//	}
+		//  });
+      //------------------------------
+		//$.ajax({
+		//	type: "GET",
+		//	url: url+parms,
+		//	dataType: "json",
+			//success: function (response) {
+
+			// $.each(response, function (i, item) {
+			//	 console.log(item);
+
+		 //    $('#Districts').append($('<option>', {
+		 //       value: item.siteId,
+		 //       text : item.siteId
+			//    }));
+			//})
+
+			//}
+    //#End Region
 
 
-        });
+	//點擊鄉鎮下拉式選單顯示路名下拉式選單內容
+	$("#Districts").change(function(){
+		$('#Roads').empty();
+		let selDistricts = $("#Districts").val();
+		const url = "@Url.Content("~/api/Roads")";
+		const parms = `?Districts=${selDistricts}`;
+
+		//步驟二對伺服器發出要求(Request)
+		GetMethod(url+parms,null,function (response) {
+
+			 $.each(response, function (i, item) {
+				 console.log(item);
+
+		     $('#Roads').append($('<option>', {
+		        value: item.road,
+		        text : item.road
+			    }));
+			})
+
+			},function (thrownError) {
+		  console.log(thrownError);
+		});
+
+	})
 
 
-        xhr.addEventListener('load', () => {
-            const datas = JSON.parse(xhr.responseText);
-           /* console.log(datas);*/
-
-            
-            datas.forEach((item) => {
-
-               /* console.log(item.city);*/
-
-                const opt = new Option(item.city, item.city);
-                selCity.options.add(opt);
-            })
-
-        })
-        xhr.open("get", "@Url.Content("~/api/City")");
-        xhr.send();
+	//呼叫API方法
+	function GetMethod(url,data,success,fail){
+		$.ajax({
+			type: "GET",
+			url: url,
+			data:data,
+			dataType: "json",
+			success: success,
+			error: fail
+	})
+	}
 
 
-    </script>
+
+	function Init(){
+
+		GetMethod("@Url.Content("~/api/City")",
+		null,
+		function (response) {
+
+			$.each(response, function (i, item) {
+
+
+			$('#city').append($('<option>', {
+				value: item.city,
+				text : item.city
+				}));
+			})
+			},
+		function (thrownError) {
+		  console.log(thrownError);
+		})
+	};
+
+		
+
+
+
+
+
+</script>
 }
