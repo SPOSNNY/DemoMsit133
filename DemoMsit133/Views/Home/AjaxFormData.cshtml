@@ -63,9 +63,9 @@
             body:formData
         }).then(response => response.text())
             .then(data => {
-                divMessage.textContent = data;
+                div.textContent = data;
             })
-
+        })
             @*const xhr = new XMLHttpRequest();
 
             xhr.addEventListener('load', () => {
@@ -79,7 +79,7 @@
 
             xhr.send(formData);*@
 
-        })
+       
 
 
 
