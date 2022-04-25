@@ -121,5 +121,14 @@ namespace DemoMsit133.Controllers
             var roads = _context.Addresses.Where(a => a.SiteId == districts).Select(c => new { c.Road }).Distinct().OrderBy(c => c.Road);
             return Json(roads);
         }
+
+        public IActionResult ByteToImg(int? id=1) 
+        {
+            Member member = _context.Members.Find(id);
+            byte[] img = member.FileData;
+            return File(img,"image/jpeg");
+        }
+
+        
     }
 }

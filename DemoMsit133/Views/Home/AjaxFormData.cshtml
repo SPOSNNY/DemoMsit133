@@ -55,7 +55,18 @@
             xzy.preventDefault(); //取消預設行為
             console.log("button click");
 
-            const xhr = new XMLHttpRequest();
+
+        const formData = new FormData(document.member);
+        //改用fetch
+        fetch("@Url.Content("~/api/register")", {
+            method: "post",
+            body:formData
+        }).then(response => response.text())
+            .then(data => {
+                divMessage.textContent = data;
+            })
+
+            @*const xhr = new XMLHttpRequest();
 
             xhr.addEventListener('load', () => {
                 const data = xhr.responseText;
@@ -63,13 +74,13 @@
             });
 
             const formData = new FormData(document.member);
-           
+
             xhr.open("post", "@Url.Content("~/api/register")");
-           
-            xhr.send(formData);
-       
+
+            xhr.send(formData);*@
+
         })
-        
+
 
 
 

@@ -12,12 +12,11 @@
 <select id="Roads">
 </select>
 @section script{
-<script>
-	const xhr = new XMLHttpRequest();
+    <script>
 
-	Init();
+    @*Init();
 
-	//點擊城市下拉式選單顯示鄉鎮下拉式選單內容
+    //點擊城市下拉式選單顯示鄉鎮下拉式選單內容
 	$("#city").on('change',function()
 	{
 		$('#Districts').empty();
@@ -42,47 +41,9 @@
 		});
 	});
 
-	//#Region "JQuery方法"
-	  //------------------------------
-	  //$.ajax({
-		//	type: "GET",
-		//	url: "@Url.Content("~/api/City")",
-		//	dataType: "json",
-		//	success: function (response) {
-		//	 console.log(response);
-
-		//		response.forEach((item) => {
-		//			const opt = new Option(item.city, item.city);
-		//			selCity.options.add(opt);
-		//		})
-
-		//	},
-		//	error: function (thrownError) {
-		//	  console.log(thrownError);
-		//	}
-		//  });
-      //------------------------------
-		//$.ajax({
-		//	type: "GET",
-		//	url: url+parms,
-		//	dataType: "json",
-			//success: function (response) {
-
-			// $.each(response, function (i, item) {
-			//	 console.log(item);
-
-		 //    $('#Districts').append($('<option>', {
-		 //       value: item.siteId,
-		 //       text : item.siteId
-			//    }));
-			//})
-
-			//}
-    //#End Region
-
 
 	//點擊鄉鎮下拉式選單顯示路名下拉式選單內容
-	$("#Districts").change(function(){
+		$("#Districts").change(function roads(){
 		$('#Roads').empty();
 		let selDistricts = $("#Districts").val();
 		const url = "@Url.Content("~/api/Roads")";
@@ -102,12 +63,11 @@
 
 			},function (thrownError) {
 		  console.log(thrownError);
+		})
 		});
 
-	})
 
-
-	//呼叫API方法
+	呼叫API方法
 	function GetMethod(url,data,success,fail){
 		$.ajax({
 			type: "GET",
@@ -118,7 +78,6 @@
 			error: fail
 	})
 	}
-
 
 
 	function Init(){
@@ -139,13 +98,99 @@
 		function (thrownError) {
 		  console.log(thrownError);
 		})
-	};
-
-		
+	};*@
 
 
 
 
+//-------------------------------------------------------------
 
-</script>
+        const selCity = document.querySelector('#city');
+        const selDistrict = document.querySelector('#Districts');
+        const selRoad = document.querySelector('#Roads');
+
+        selCity.addEventListener('change', () => {
+            const city = selCity.options[selCity.selectedIndex].value;
+            console.log(city);
+            fetch("@Url.Content("~/api/districts")?city=" + city)
+                .then(response => response.json())
+                .then(datas => {
+                     renderDistrict(datas);
+                    const district = selDistrict.options[selDistrict.selectedIndex].value;
+                    return fetch("@Url.Content("~/api/roads")?districts=" + district )
+                })
+                .then(datas => {
+                    renderRoad(datas);
+                })
+                .catch(error => {
+                    console.log("有錯誤：" + error);
+                })
+          })
+
+        selDistrict.addEventListener('change', () => {
+               const district = selDistrict.options[selDistrict.selectedIndex].value;
+            fetch("@Url.Content("~/api/roads")?districts=" + district)
+                .then(response => response.json())
+                     .then(datas => {
+                          renderRoad(datas);
+                     })
+                    .catch(error => {
+                          console.log("有錯誤：" + error);
+                    })
+        })
+        fetch("@Url.Content("~/api/city")")
+            .then(response => response.json())
+            .then(datas => {
+                renderCity(datas);
+                const city = selCity.options[selCity.selectedIndex].value;
+                return fetch("@Url.Content("~/api/districts")?city=" + city )
+            })
+            .then(response => response.json())
+            .then(datas => {
+                renderDistrict(datas);
+                const district = selDistrict.options[selDistrict.selectedIndex].value;
+                return fetch("@Url.Content("~/api/roads")?districts=" + district )
+            })
+            .then(response => response.json())
+            .then(datas => {
+                renderRoad(datas);
+            })
+            .catch(error => {
+                console.log("有錯誤：" + error);
+            })
+
+     
+
+        function renderCity(datas) {
+            datas.forEach(item => {
+                const opt = new Option(item.city, item.city);
+                selCity.options.add(opt);
+            })
+        }
+        function renderDistrict(datas) {
+            //清除原有的option標籤
+            while (selDistrict.length > 0) {
+                selDistrict.remove(selDistrict.length - 1)
+            }
+            datas.forEach(item => {
+                const opt = new Option(item.siteId, item.siteId);
+                selDistrict.options.add(opt);
+            })
+        }
+        function renderRoad(datas) {
+            //清除原有的option標籤
+            while (selRoad.length > 0) {
+                selRoad.remove(selRoad.length - 1)
+            }
+            datas.forEach(item => {
+                const opt = new Option(item.road, item.road);
+                selRoad.options.add(opt);
+            })
+        }
+
+
+
+
+
+    </script>
 }
