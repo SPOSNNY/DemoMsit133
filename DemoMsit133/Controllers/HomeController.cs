@@ -18,12 +18,23 @@ namespace DemoMsit133.Controllers
             _logger = logger;
         }
 
+
         public IActionResult Index()
         {
             return View();
         }
 
+        public IActionResult Partial()
+        {
+            return PartialView();
+        }
+
         public IActionResult Register()
+        {
+            return View();
+        }
+
+        public IActionResult jQuery()
         {
             return View();
         }
@@ -55,7 +66,7 @@ namespace DemoMsit133.Controllers
         {
             ViewBag.name = user.username;
             ViewBag.age = user.age;
-            ViewBag.email = user.email;
+       
             return View();
         }
 

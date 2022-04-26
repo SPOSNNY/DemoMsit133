@@ -23,7 +23,7 @@ namespace DemoMsit133.Controllers
 
         public IActionResult Index(CUser user)
         {
-            System.Threading.Thread.Sleep(4000);
+            System.Threading.Thread.Sleep(1000);
             if (string.IsNullOrEmpty(user.username))
             {
                 user.username = "中文";

@@ -11,6 +11,5 @@ namespace DemoMsit133.Models
 
         public int? age { get; set; }
 
-        public string email { get; set; }
     }
 }
