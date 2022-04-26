@@ -13,6 +13,7 @@ namespace Msit133WebAPi.Controllers
     public class ValuesController : ControllerBase
     {
         // GET: api/<ValuesController>
+        //[Produces("application/xml")]
         [HttpGet]
         public IEnumerable<string> Get()
         {
@@ -27,6 +28,7 @@ namespace Msit133WebAPi.Controllers
         }
 
         // POST api/<ValuesController>
+
         [HttpPost]
         public void Post([FromBody] string value)
         {

@@ -29,7 +29,7 @@ namespace Msit133WebAPi
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers().AddXmlSerializerFormatters();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Msit133WebAPi", Version = "v1" });
@@ -39,7 +39,18 @@ namespace Msit133WebAPi
             {
                 options.UseSqlServer(Configuration.GetConnectionString("NorthwindConnection"));
             });
-            services.AddControllersWithViews()
+            services.AddControllersWithViews();
+
+            services.AddCors(option=>
+               {
+                   option.AddDefaultPolicy(builder =>
+                   {
+                       builder.WithOrigins("*").AllowAnyHeader().AllowAnyMethod();
+
+
+                   });
+            
+               });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,6 +65,7 @@ namespace Msit133WebAPi
 
             app.UseHttpsRedirection();
 
+            app.UseCors();
             app.UseRouting();
 
             app.UseAuthorization();

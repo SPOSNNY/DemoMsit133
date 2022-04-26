@@ -64,10 +64,24 @@
                 })
                 $('#divAlert').html(ul);
             })
-                
+
         })
         $('#buttonCors').click(function () {
-            $('#divAlert').text("CORs")
+             $.ajax({
+                url: '@Url.Content("https://localhost:44314/api/Shippers")',
+                type: 'get',
+                dataType: 'json',
+            }).done(function (data) {
+
+                console.log(data);
+                let ul = $('<ul></ul>').addClass("list-group");
+                $.each(data, function (index, item) {
+                    const li = $("<li></li>").text(item.companyName).addClass("list-group-item");
+                    ul.append(li);
+                })
+                $('#divAlert').html(ul);
+
+            }) 
         })
 
     </script>
