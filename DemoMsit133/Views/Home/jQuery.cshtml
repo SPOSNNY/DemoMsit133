@@ -35,7 +35,7 @@
         $('#buttonJson').click(function () {
             $.get("@Url.Content("~/api/City")",
                 function (data) {
-                    let ul = $('<ul></ul>').addClass("list-group")
+                    let ul = $('<ul></ul>').addClass("list-group");
                     $.each(data, function (index,item) {
                         const li = $("<li></li>").text(item.city).addClass("list-group-item");
                         ul.append(li);
@@ -50,7 +50,21 @@
             $('#divAlert').load("@Url.Content("~/home/Partial")");
         })
         $('#buttonAjax').click(function () {
-            $('#divAlert').text("AJAX")
+            $.ajax({
+                url: '@Url.Content("~/api/city")',
+                type: 'get',
+                dataType: 'json',
+            }).done(function (data) {
+
+                console.log(data);
+                let ul = $('<ul></ul>').addClass("list-group");
+                $.each(data, function (index, item) {
+                    const li = $("<li></li>").text(item.city).addClass("list-group-item");
+                    ul.append(li);
+                })
+                $('#divAlert').html(ul);
+            })
+                
         })
         $('#buttonCors').click(function () {
             $('#divAlert').text("CORs")
